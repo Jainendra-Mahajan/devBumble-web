@@ -27,7 +27,6 @@ const Login = () => {
             return navigate("/")
 
         } catch (err) {
-            console.log(err);
             setError(err?.response?.data || "Something Went Wrong")
         }
     }
