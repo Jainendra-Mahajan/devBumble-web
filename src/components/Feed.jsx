@@ -12,7 +12,6 @@ const Feed = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
     const fetchFeed = async () => {
         if (userFeedData) return;
         try {
@@ -30,8 +29,12 @@ const Feed = () => {
         fetchFeed();
     }, [])
 
-    return (
 
+    if (!userFeedData || userFeedData.length === 0) {
+        return <h1 className='my-10 text-center'>No Devevlopers Available with this filter</h1>
+    }
+
+    return (
         <div>
             {userFeedData && <UserCard firstName={userFeedData[0].firstName} lastName={userFeedData[0].lastName} age={userFeedData[0].age} gender={userFeedData[0].gender}
                 photoUrl={userFeedData[0].photoUrl} about={userFeedData[0].about} />}
