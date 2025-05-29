@@ -36,8 +36,8 @@ const Feed = () => {
 
     return (
         <div>
-            {userFeedData && <UserCard firstName={userFeedData[0].firstName} lastName={userFeedData[0].lastName} age={userFeedData[0].age} gender={userFeedData[0].gender}
-                photoUrl={userFeedData[0].photoUrl} about={userFeedData[0].about} />}
+            <UserCard _id={userFeedData[0]._id} firstName={userFeedData[0].firstName} lastName={userFeedData[0].lastName} age={userFeedData[0].age} gender={userFeedData[0].gender}
+                photoUrl={userFeedData[0].photoUrl} about={userFeedData[0].about} />
         </div>
     )
 }
