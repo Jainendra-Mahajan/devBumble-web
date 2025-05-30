@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { removeUserFromFeed } from '../utils/feedSlice';
+import { useSwipeable } from 'react-swipeable';
 
 const UserCard = ({ _id, firstName, lastName, age, gender, photoUrl, about }) => {
     const dispatch = useDispatch();
@@ -16,8 +17,15 @@ const UserCard = ({ _id, firstName, lastName, age, gender, photoUrl, about }) =>
         }
     };
 
+    const handlers = useSwipeable({
+        onSwipedLeft: () => handleSendRequest("ignored", _id),
+        onSwipedRight: () => handleSendRequest("interested", _id),
+        preventScrollOnSwipe: true,
+        trackMouse: true
+    })
     return (
-        <div className="card bg-base-200 text-base-content shadow-xl rounded-2xl overflow-hidden w-full md:w-96 mx-auto mt-10 transition-transform transform hover:scale-[1.02] duration-200">
+        <div {...handlers}
+            className="card bg-base-200 text-base-content shadow-xl rounded-2xl overflow-hidden w-full md:w-96 mx-auto mt-10 transition-transform transform hover:scale-[1.02] duration-200">
             <figure className="h-96 w-full overflow-hidden">
                 <img
                     className="w-full h-full object-cover"

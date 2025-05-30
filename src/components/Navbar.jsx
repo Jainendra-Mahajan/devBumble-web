@@ -6,22 +6,20 @@ import { removeUser } from "../utils/userSlice";
 
 const NavBar = () => {
 
-    const user = useSelector(store => store.user)
+    const user = useSelector(store => store.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // console.log(user);
 
     const handleLogout = async () => {
-
         try {
             await axios.post(BASE_URL + "logout", {}, { withCredentials: true });
             dispatch(removeUser());
             return navigate("/login");
+        } catch (err) {
+            // handle error if needed
         }
-        catch (err) {
+    };
 
-        }
-    }
     return (
         <nav className="navbar bg-base-100 shadow-md px-6 py-3 flex items-center justify-between">
             <div className="flex-1">
@@ -34,16 +32,16 @@ const NavBar = () => {
                 <div className="relative dropdown dropdown-end">
                     <button
                         tabIndex={0}
-                        className="flex items-center btn btn-ghost btn-circle avatar focus:outline-none focus:ring-2 focus:ring-primary transition"
+                        className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary transition"
                         aria-haspopup="true"
                         aria-expanded="false"
                     >
+                        <span className="text-gray-300 font-medium">Welcome, {user.firstName}</span>
                         <img
                             alt={`${user.firstName} avatar`}
                             src={user.photoUrl}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-primary"
+                            className="w-12 h-12 rounded-full object-cover border-2 border-primary cursor-pointer"
                         />
-
                     </button>
                     <ul
                         tabIndex={0}
@@ -70,7 +68,6 @@ const NavBar = () => {
                             <button className="w-full text-left px-4 py-2 rounded hover:bg-primary/10 transition focus:outline-none">
                                 Logout
                             </button>
-
                         </li>
                     </ul>
                 </div>
