@@ -7,8 +7,8 @@ import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
 
-    const [email, setEmail] = useState("trump@gmail.com");
-    const [password, setPassword] = useState("Trump@12345");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [isLoginForm, setIsLoginForm] = useState(true);
@@ -52,54 +52,55 @@ const Login = () => {
 
     return (
         <div>
-            <div className="card card-dash bg-base-200 w-96 mx-auto my-15">
+            <div className="card card-dash bg-base-200 w-96 mx-auto my-16 shadow-2xl">
                 <div className="card-body">
-                    <h2 className="card-title mx-auto">{isLoginForm ? "Login" : "Sign Up"}</h2>
+                    <h2 className="card-title mx-auto text-2xl text-primary">{isLoginForm ? "Login" : "Sign Up"}</h2>
 
-                    <div>
+                    <div className="space-y-4">
                         {!isLoginForm && <fieldset className="fieldset">
                             <legend className="fieldset-legend">First Name</legend>
-                            <input type="text" className="input" placeholder="Type here" value={firstName}
+                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
                         </fieldset>}
 
                         {!isLoginForm && <fieldset className="fieldset">
                             <legend className="fieldset-legend">Last Name</legend>
-                            <input type="text" className="input" placeholder="Type here" value={lastName}
+                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                             />
                         </fieldset>}
 
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Email</legend>
-                            <input type="text" className="input" placeholder="Type here" value={email}
+                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </fieldset>
 
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Password</legend>
-                            <input type="password" className="input" placeholder="Type here" value={password}
+                            <input type="password" className="input input-bordered bg-base-100" placeholder="Type here" value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </fieldset>
 
                     </div>
-                    {error && <p className='text-red-600'>{error}</p>}
-                    <div className="card-actions justify-center">
-                        <button className="btn btn-primary" onClick={isLoginForm ? handleLogin : handleSignup}>
+
+                    {error && <p className='text-error font-medium text-center mt-2'>{error}</p>}
+
+                    <div className="card-actions justify-center mt-4">
+                        <button className="btn btn-primary w-full" onClick={isLoginForm ? handleLogin : handleSignup}>
                             {isLoginForm ? "Login" : "Sign Up"}
                         </button>
                     </div>
-                    <p className='text-center mt-2 cursor-pointer'
+
+                    <p className='text-center mt-3 cursor-pointer text-primary-content/70 hover:text-primary'
                         onClick={handleLoginButton}
-                    >{isLoginForm ? "New User ? SignUp " : "Existing User ? Login"}</p>
+                    >{isLoginForm ? "New User? Sign Up" : "Existing User? Login"}</p>
                 </div>
             </div>
         </div>
     )
 }
 export default Login
-
-//install cors
