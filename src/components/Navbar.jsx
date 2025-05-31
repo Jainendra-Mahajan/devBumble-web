@@ -32,7 +32,7 @@ const NavBar = () => {
                 <div className="relative dropdown dropdown-end">
                     <button
                         tabIndex={0}
-                        className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary transition"
+                        className="flex items-center gap-2 focus:outline-none focus:ring-primary transition"
                         aria-haspopup="true"
                         aria-expanded="false"
                     >
