@@ -69,6 +69,11 @@ const NavBar = () => {
                                 Policy
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/premium" className="px-4 py-2 rounded hover:bg-primary/10 transition">
+                                Premium
+                            </Link>
+                        </li>
                         <li onClick={handleLogout}>
                             <button className="w-full text-left px-4 py-2 rounded hover:bg-primary/10 transition focus:outline-none">
                                 Logout

@@ -8,6 +8,7 @@ import Profile from "./components/Profile"
 import Requests from "./components/Requests"
 import Connections from "./components/Connections"
 import Policy from "./components/Policy"
+import Premium from "./components/Premium"
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/requests" element={<Requests />} />
               <Route path="/connections" element={<Connections />} />
               <Route path="/policy" element={<Policy />} />
+              <Route path="/premium" element={<Premium />} />
 
             </Route >
           </Routes>
