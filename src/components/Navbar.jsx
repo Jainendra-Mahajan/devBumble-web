@@ -64,6 +64,11 @@ const NavBar = () => {
                                 My Requests
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/policy" className="px-4 py-2 rounded hover:bg-primary/10 transition">
+                                Policy
+                            </Link>
+                        </li>
                         <li onClick={handleLogout}>
                             <button className="w-full text-left px-4 py-2 rounded hover:bg-primary/10 transition focus:outline-none">
                                 Logout
