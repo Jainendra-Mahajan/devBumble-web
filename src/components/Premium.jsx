@@ -59,18 +59,15 @@ const Premium = () => {
         }
     }
 
-    if (isUserPremium) {
-        return (
-            <div className="flex justify-center items-center h-[60vh]">
-                <div className="bg-green-100 border border-green-400 text-green-700 px-8 py-6 rounded-lg shadow-lg text-center">
-                    <h2 className="text-2xl font-bold mb-2">🎉 You're Already a Premium Member!</h2>
-                    <p className="text-lg">Thank you for supporting DevBumble. Enjoy all your premium features and happy connecting! 🚀</p>
-                </div>
-            </div>
-        );
-    }
 
-    return (
+    return isUserPremium ? (
+        <div className="flex justify-center items-center h-[60vh]">
+            <div className="bg-green-100 border border-green-400 text-green-700 px-8 py-6 rounded-lg shadow-lg text-center">
+                <h2 className="text-2xl font-bold mb-2">🎉 You're Already a Premium Member!</h2>
+                <p className="text-lg">Thank you for supporting DevBumble. Enjoy all your premium features and happy connecting! 🚀</p>
+            </div>
+        </div>
+    ) : (
         <div className="my-10 px-4">
             <h1 className="text-3xl text-center text-primary font-bold mb-8">Premium Plans</h1>
 
