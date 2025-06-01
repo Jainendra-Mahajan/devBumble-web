@@ -5,6 +5,10 @@ import { BASE_URL } from '../utils/constants';
 const Premium = () => {
 
     const [isUserPremium, setIsUserPremium] = useState(false);
+    useEffect(() => {
+        verifyPremiumUser();
+    }, []);
+
     const verifyPremiumUser = async () => {
         try {
             const res = await axios.get(BASE_URL + "premium/verify", { withCredentials: true });
@@ -54,11 +58,6 @@ const Premium = () => {
             console.error(error)
         }
     }
-
-    useEffect(() => {
-        verifyPremiumUser();
-    }, []);
-
 
     if (isUserPremium) {
         return (
