@@ -5,21 +5,22 @@ import { BASE_URL } from '../utils/constants';
 const Premium = () => {
 
     const [isUserPremium, setIsUserPremium] = useState(false);
+    const verifyPremiumUser = async () => {
+        try {
+            const res = await axios.get(BASE_URL + "premium/verify", { withCredentials: true });
+
+            if (res.data.isPremium) {
+                setIsUserPremium(true);
+            }
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }
+
 
     const handlePurchasePlan = async (plan) => {
 
-        const verifyPremiumUser = async () => {
-            try {
-                const res = await axios.get(BASE_URL + "premium/verify", { withCredentials: true });
-
-                if (res.data.isPremium) {
-                    setIsUserPremium(true);
-                }
-            }
-            catch (error) {
-                console.error(error)
-            }
-        }
         try {
             const res = await axios.post(BASE_URL + "payment/create",
                 { membershipType: plan },
