@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { addConnection } from '../utils/connectionSlice';
 import { Link } from 'react-router';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Connections = () => {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Connections = () => {
             const res = await axios.get(BASE_URL + "user/requests/connections", { withCredentials: true });
             dispatch(addConnection(res?.data?.data));
         } catch (error) {
-            console.log(error);
+            toast.error("Failed to fetch connections. Please try again later.");
         }
     };
 

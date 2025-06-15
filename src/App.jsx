@@ -10,6 +10,7 @@ import Connections from "./components/Connections"
 import Policy from "./components/Policy"
 import Premium from "./components/Premium"
 import Chat from "./components/Chat"
+import Welcome from "./components/Welcome"
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="/policy" element={<Policy />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/chat/:targetId" element={<Chat />} />
+              <Route path="/welcome" element={<Welcome />} />
 
             </Route >
           </Routes>

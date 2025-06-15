@@ -1,106 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import UserCard from './UserCard';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
-import { addUser } from "../utils/userSlice"
+import { addUser } from "../utils/userSlice";
+import { toast } from 'react-toastify';
 
 const EditProfile = ({ user }) => {
+    const [firstName, setFirstName] = useState(user.firstName || "");
+    const [lastName, setLastName] = useState(user.lastName || "");
+    const [age, setAge] = useState(user.age || "");
+    const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "");
+    const [about, setAbout] = useState(user.about || "");
+    const [gender, setGender] = useState(user.gender || "");
+    const [showToast, setShowToast] = useState(false);
+    const [error, setError] = useState("");
 
-    const [firstName, setFirstName] = useState(user.firstName)
-    const [lastName, setLastName] = useState(user.lastName)
-    const [age, setAge] = useState(user.age)
-    const [photoUrl, setPhotoUrl] = useState(user.photoUrl)
-    const [about, setAbout] = useState(user.about)
-    const [gender, setGender] = useState(user.gender)
-    const [showToast, setShowToast] = useState(false)
-    const [error, setError] = useState("")
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch();
 
     const saveProfile = async () => {
         try {
             setError("");
-            const res = await axios.patch(BASE_URL + "profile/edit", {
-                firstName,
-                lastName,
-                age,
-                photoUrl,
-                about
-            }, { withCredentials: true });
-
+            const res = await axios.patch(
+                BASE_URL + "profile/edit",
+                { firstName, lastName, age, photoUrl, about, gender },
+                { withCredentials: true }
+            );
 
             dispatch(addUser(res?.data?.data));
-            setShowToast(true)
-            setTimeout(() => {
-                setShowToast(false)
-            }, 3000)
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+        } catch (err) {
+            toast.error(message);
         }
-        catch (err) {
-            console.log(err);
-            setError(err.response.data);
-        }
-    }
+    };
+
     return (
-        <div className='flex flex-col md:flex-row justify-center items-start gap-10 my-10 px-4'>
-            <div className="card card-dash bg-base-200 w-full md:w-96 mb-10">
-                <div className="card-body">
-                    <h2 className="card-title mx-auto">Edit Profile</h2>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">First Name</legend>
-                        <input type="text" className="input" placeholder="Type here" value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Last Name</legend>
-                        <input type="text" className="input" placeholder="Type here" value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Age</legend>
-                        <input type="text" className="input" placeholder="Type here" value={age}
-                            onChange={(e) => setAge(e.target.value)}
-                        />
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Photo Url</legend>
-                        <input type="text" className="input" placeholder="Type here" value={photoUrl}
-                            onChange={(e) => setPhotoUrl(e.target.value)}
-                        />
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Gender</legend>
-                        <select value={gender} className="select w-full" onChange={(e) => setGender(e.target.value)}>
-                            <option disabled value="Gender">Pick a Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">About</legend>
-                        <textarea className="textarea" placeholder="Type here" value={about}
-                            onChange={(e) => setAbout(e.target.value)}></textarea>
-                    </fieldset>
-
-                    {error && <p className='text-red-500 text-lg font-bold'>{"Error: " + error}</p>}
-
-                    <div className="card-actions justify-center mt-4">
-                        <button className="btn btn-primary" onClick={saveProfile}>Save</button>
-                    </div>
-                </div>
-            </div>
-
-
-            <div className="w-full md:w-96">
+        <div className="flex flex-col-reverse lg:flex-row items-start justify-center gap-8 p-4 md:p-8 max-w-6xl mx-auto">
+            <div className="w-full lg:w-1/2">
                 <UserCard
                     firstName={firstName}
                     lastName={lastName}
@@ -117,9 +54,80 @@ const EditProfile = ({ user }) => {
                     </div>
                 )}
             </div>
+
+            <div className="card w-full lg:w-1/2 bg-base-200 shadow-xl">
+                <div className="card-body space-y-4">
+                    <h2 className="card-title text-center text-2xl font-semibold text-primary">
+                        Edit Profile
+                    </h2>
+
+                    <div className="space-y-3">
+                        <InputField label="First Name" value={firstName} onChange={setFirstName} />
+                        <InputField label="Last Name" value={lastName} onChange={setLastName} />
+                        <InputField label="Age" value={age} onChange={setAge} type="number" />
+                        <InputField label="Photo URL" value={photoUrl} onChange={setPhotoUrl} />
+                        <TextareaField label="About" value={about} onChange={setAbout} />
+
+                        <div>
+                            <label className="label">
+                                <span className="label-text font-medium">Gender</span>
+                            </label>
+                            <select
+                                value={gender || ""}
+                                onChange={(e) => setGender(e.target.value)}
+                                className="select select-bordered w-full"
+                            >
+                                <option value="" disabled>
+                                    Pick a Gender
+                                </option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {error && <p className="text-red-500 text-sm font-medium text-center">{error}</p>}
+
+                    <div className="card-actions justify-center">
+                        <button className="btn btn-primary w-full sm:w-1/2" onClick={saveProfile}>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    )
+    );
+};
 
-}
+export default EditProfile;
 
-export default EditProfile
+const InputField = ({ label, value, onChange, type = "text" }) => (
+    <div>
+        <label className="label">
+            <span className="label-text font-medium">{label}</span>
+        </label>
+        <input
+            type={type}
+            className="input input-bordered w-full"
+            placeholder={`Enter ${label.toLowerCase()}`}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        />
+    </div>
+);
+
+const TextareaField = ({ label, value, onChange }) => (
+    <div>
+        <label className="label">
+            <span className="label-text font-medium">{label}</span>
+        </label>
+        <textarea
+            className="textarea textarea-bordered w-full"
+            rows="3"
+            placeholder={`Enter ${label.toLowerCase()}`}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        />
+    </div>
+);

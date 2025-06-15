@@ -44,63 +44,89 @@ const Login = () => {
                 { withCredentials: true })
 
             dispatch(addUser(res?.data?.data));
-            return navigate("/profile")
+            return navigate("/welcome")
         } catch (error) {
             setError(error?.response?.data || "Something Went Wrong")
         }
     }
 
     return (
-        <div>
-            <div className="card card-dash bg-base-200 w-96 mx-auto my-16 shadow-2xl">
+        <div className="px-4">
+            <div className="card card-dash bg-base-200 w-full max-w-sm mx-auto my-16 shadow-2xl">
                 <div className="card-body">
                     <h2 className="card-title mx-auto text-2xl text-primary">{isLoginForm ? "Login" : "Sign Up"}</h2>
 
                     <div className="space-y-4">
-                        {!isLoginForm && <fieldset className="fieldset">
-                            <legend className="fieldset-legend">First Name</legend>
-                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                        </fieldset>}
+                        {!isLoginForm && (
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">First Name</legend>
+                                <input
+                                    type="text"
+                                    className="input input-bordered bg-base-100"
+                                    placeholder="Type here"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                            </fieldset>
+                        )}
 
-                        {!isLoginForm && <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Last Name</legend>
-                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                            />
-                        </fieldset>}
+                        {!isLoginForm && (
+                            <fieldset className="fieldset">
+                                <legend className="fieldset-legend">Last Name</legend>
+                                <input
+                                    type="text"
+                                    className="input input-bordered bg-base-100"
+                                    placeholder="Type here"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </fieldset>
+                        )}
 
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Email</legend>
-                            <input type="text" className="input input-bordered bg-base-100" placeholder="Type here" value={email}
+                            <input
+                                type="text"
+                                className="input input-bordered bg-base-100"
+                                placeholder="Type here"
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </fieldset>
 
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Password</legend>
-                            <input type="password" className="input input-bordered bg-base-100" placeholder="Type here" value={password}
+                            <input
+                                type="password"
+                                className="input input-bordered bg-base-100"
+                                placeholder="Type here"
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </fieldset>
-
                     </div>
 
-                    {error && <p className='text-error font-medium text-center mt-2'>{error}</p>}
+                    {error && <p className="text-error font-medium text-center mt-2">{error}</p>}
 
                     <div className="card-actions justify-center mt-4">
-                        <button className="btn btn-primary w-full" onClick={isLoginForm ? handleLogin : handleSignup}>
+                        <button
+                            className="btn btn-primary btn-sm w-full sm:w-auto sm:px-6"
+                            onClick={isLoginForm ? handleLogin : handleSignup}
+                        >
                             {isLoginForm ? "Login" : "Sign Up"}
                         </button>
                     </div>
 
-                    <p className='text-center mt-3 cursor-pointer text-primary-content/70 hover:text-primary'
+                    <p
+                        className="text-center mt-3 cursor-pointer text-primary-content/70 hover:text-primary"
                         onClick={handleLoginButton}
-                    >{isLoginForm ? "New User? Sign Up" : "Existing User? Login"}</p>
+                    >
+                        {isLoginForm ? "New User? Sign Up" : "Existing User? Login"}
+                    </p>
                 </div>
             </div>
         </div>
-    )
+    );
+
 }
 export default Login

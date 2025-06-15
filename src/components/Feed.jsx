@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFeed } from '../utils/feedSlice';
 import UserCard from './UserCard';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify"
 
 const Feed = () => {
     const userFeedData = useSelector((store) => store.feed);
@@ -21,7 +22,7 @@ const Feed = () => {
             if (err?.response?.status === 400) {
                 navigate('/login');
             } else {
-                console.log(err);
+                toast.error(err);
             }
         }
     };

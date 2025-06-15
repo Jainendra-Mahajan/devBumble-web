@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRequest, removeRequest } from '../utils/requestSlice'
+import { toast } from 'react-toastify'
 
 const Requests = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Requests = () => {
             const res = await axios.get(BASE_URL + "user/requests/received", { withCredentials: true });
             dispatch(addRequest(res?.data?.data));
         } catch (err) {
-            console.log(err);
+            toast.error(err);
         }
     }
 

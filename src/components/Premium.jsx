@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
+import { toast } from "react-toastify"
 
 const Premium = () => {
 
@@ -18,7 +19,7 @@ const Premium = () => {
             }
         }
         catch (error) {
-            console.error(error)
+            toast.error(error);
         }
     }
 

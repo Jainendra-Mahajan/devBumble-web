@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { createSocketConnection } from '../utils/socket';
@@ -11,6 +11,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [onlineUsers, setOnlineUsers] = useState({});
+    const bottomRef = useRef(null);
 
     const userId = user?._id;
     const firstName = user?.firstName;
@@ -23,8 +24,8 @@ const Chat = () => {
 
         socket.emit("joinChat", { firstName, lastName, userId, targetId });
 
-        socket.on("messageReceived", ({ firstName, lastName, text }) => {
-            setMessages(prev => [...prev, { firstName, lastName, text }]);
+        socket.on("messageReceived", ({ firstName, lastName, text, photoUrl }) => {
+            setMessages(prev => [...prev, { firstName, lastName, text, photoUrl }]);
         });
 
         socket.on("onlineUsers", (users) => {
@@ -41,6 +42,10 @@ const Chat = () => {
         fetchChat();
     }, [targetId]);
 
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
     const fetchChat = async () => {
         try {
             const res = await axios.get(`${BASE_URL}chat/${targetId}`, { withCredentials: true });
@@ -50,7 +55,8 @@ const Chat = () => {
                 return {
                     firstName: senderId?.firstName,
                     lastName: senderId?.lastName,
-                    text
+                    text,
+                    photoUrl: senderId?.photoUrl
                 };
             });
 
@@ -82,23 +88,26 @@ const Chat = () => {
             <div className="mockup-window bg-base-200 border border-base-300 rounded-xl shadow-lg overflow-hidden">
                 <div className="p-4 space-y-6 max-h-[60vh] overflow-y-auto">
                     {messages.map((msg, index) => (
-                        <div key={index} className={"chat " + (user.firstName === msg.firstName ? "chat-end" : "chat-start")}>
+                        <div key={index} className={`chat ${user.firstName === msg.firstName ? "chat-end" : "chat-start"}`}>
                             <div className="chat-image avatar">
                                 <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                     <img
                                         alt="Avatar"
-                                        src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                                        src={user.firstName === msg.firstName ?
+                                            user?.photoUrl : msg?.photoUrl}
+
+
                                     />
                                 </div>
                             </div>
                             <div className="chat-header text-white">
                                 {msg.firstName} {msg.lastName}
-                                <time className="text-xs opacity-50 ml-2">12:45</time>
                             </div>
                             <div className="chat-bubble bg-primary text-white">{msg.text}</div>
                             <div className="chat-footer text-xs opacity-60">Delivered</div>
                         </div>
                     ))}
+                    <div ref={bottomRef} />
                 </div>
             </div>
 
